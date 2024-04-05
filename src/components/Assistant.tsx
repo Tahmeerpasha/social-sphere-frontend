@@ -16,7 +16,7 @@ const Assistant = ({ toggle, setPromptText }) => {
   const [prompt, setPrompt] = useState("");
   const [aiText, setAiText] = useState("");
   const [copied, setCopied] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const handlePromptGeneration = async () => {
     // Call the generateText function here
     setLoading(true);
