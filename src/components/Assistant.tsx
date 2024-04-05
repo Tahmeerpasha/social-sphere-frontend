@@ -12,7 +12,11 @@ import {
 } from "@/components/ui/tooltip";
 import Spinner from "./Spinner";
 
-const Assistant = ({ toggle, setPromptText }) => {
+interface AssistantProps {
+  toggle: (value: boolean) => void;
+  setPromptText: (value: string) => void;
+}
+const Assistant = ({ toggle, setPromptText }: AssistantProps) => {
   const [prompt, setPrompt] = useState("");
   const [aiText, setAiText] = useState("");
   const [copied, setCopied] = useState(false);
@@ -74,7 +78,7 @@ const Assistant = ({ toggle, setPromptText }) => {
           <div className="p-2">
             <h2 className="font-bold">AI Generated Text</h2>
             <div className="p-2 text-pretty">
-              <Spinner />
+              {/* <Spinner /> */}
               <Textarea rows={15} cols={20} readOnly value={aiText} />
             </div>
             <div className="flex justify-between items-center p-2">
