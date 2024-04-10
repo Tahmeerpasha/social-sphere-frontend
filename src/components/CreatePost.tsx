@@ -6,6 +6,9 @@ import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { AiOutlineClose } from "react-icons/ai";
 import Assistant from "./Assistant";
+import { useToast } from "@/components/ui/use-toast"
+
+
 
 type ToggleFunction = () => void;
 
@@ -13,7 +16,11 @@ interface Props {
   toggle: ToggleFunction;
 }
 
+
 const CreatePost: React.FC<Props> = ({ toggle }) => {
+
+  const { toast } = useToast()
+
   const [textareaValue, setTextareaValue] = useState("");
   const [mediaUploaded, setMediaUploaded] = useState(false);
   const [assistantView, setAssistantView] = useState(false);
@@ -58,6 +65,10 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
 
       if (response.status === 200) {
         console.log("Text share created:", response.data);
+        toast({
+          title: "Text post created",
+          // description: "Friday, February 10, 2023 at 5:57 PM",
+        })
       } else {
         console.error(
           "Error creating LinkedIn text share:",
@@ -119,7 +130,7 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
         {/* Assistant view */}
         {assistantView && (
         <div className="p-5 h-screen relative">
-          <Assistant toggle={setAssistantView} setPromptText={""} />
+          <Assistant toggle={setAssistantView} setPromptText={()=>{""}} />
         </div>
       )}
       <div className="bg-white p-8 w-1/2 h-auto rounded-lg">

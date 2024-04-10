@@ -5,9 +5,17 @@ import api from "@/lib/api";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 
+
+
 const AddChannelModal = () => {
   const router = useRouter();
   const [codeExchanged, setCodeExchanged] = useState(false);
+
+
+  
+
+
+
   const generateRandomState = () => {
     // Generate a random string to use as the state parameter
     return Math.random().toString(36).substring(2);
