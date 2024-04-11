@@ -55,7 +55,7 @@ function Calendar() {
     setCreatePostView(!createPostView);
   };
   return (
-    <main className="lg:mt-14 lg:m-5 p-1">
+    <main className="mt-20 ml-80 p-1">
       <div className="flex justify-between items-center p-5">
         <div className="font-bold pr-5">Calendar</div>
         <Button onClick={handleCreatePostView}>Create Post</Button>

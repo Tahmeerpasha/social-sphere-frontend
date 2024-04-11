@@ -34,7 +34,7 @@ const FileInput: React.FC<FileInputProps> = ({
       <div className="mt-8 max-w-40">
         <label className="flex flex-col justify-center items-center border border-dashed rounded-xl p-5 border-black">
           <ImageIcon />
-          <span className="text-gray-700 dark:text-white">Drag and drop</span>
+          <span className="text-gray-700">Drag and drop</span>
           <p>OR</p>
           <input
             type="file"

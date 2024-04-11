@@ -35,18 +35,18 @@ const Create = () => {
     fetchData();
   }, []);
   return (
-    <section className="mt-12">
+    <section className="mt-20 ml-72">
       <div className="p-5 flex justify-between items-center">
         <div className="flex justify-between items-center">
-          <span className="text-2xl font-bold p-5">Create Idea</span>
-          {/* <Tags /> */}
+          <span className="text-2xl font-bold p-5">Create</span>
+          <Tags />
         </div>
         <div className="flex">
           <button
             onClick={() => {
               setGenerateIdeaView(!generateIdeaView);
             }}
-            className="flex items-center justify-between px-2 bg-blue-300 dark:bg-blue-800 rounded-xl mx-2"
+            className="flex items-center justify-between px-2 bg-blue-500 dark:bg-blue-800 rounded-xl mx-2"
           >
             <FaWandMagic />
             <span className="px-2">Generate Ideas</span>
@@ -72,9 +72,7 @@ const Create = () => {
         <div className="fixed flex justify-between items-center inset-0 z-50 bg-gray-200 bg-opacity-75 overflow-auto md:p-8">
           <Assistant
             toggle={() => setGenerateIdeaView(!generateIdeaView)}
-            setPromptText={() => {
-              ("");
-            }}
+            setPromptText={""}
           />
         </div>
       )}

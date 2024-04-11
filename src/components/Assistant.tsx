@@ -20,7 +20,7 @@ const Assistant = ({ toggle, setPromptText }: AssistantProps) => {
   const [prompt, setPrompt] = useState("");
   const [aiText, setAiText] = useState("");
   const [copied, setCopied] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const handlePromptGeneration = async () => {
     // Call the generateText function here
     setLoading(true);
@@ -35,7 +35,7 @@ const Assistant = ({ toggle, setPromptText }: AssistantProps) => {
       });
   };
   return (
-    <div className="bg-white dark:bg-black w-fit h-full flex flex-col justify-start  p-10 rounded-xl">
+    <div className="bg-white w-fit h-full flex flex-col justify-start  p-10 rounded-xl">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg flex items-center font-bold">
           {" "}
