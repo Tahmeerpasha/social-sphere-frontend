@@ -140,17 +140,19 @@ const AddChannelModal = () => {
 
   return (
     <div>
-      <h2 className="text-2xl mb-4">Add New Social Account</h2>
-      <div className="flex justify-center pt-56">
+      <h2 className="text-2xl mb-4 text-center pt-40">
+        Add New Social Account
+      </h2>
+      <div className="flex flex-col w-full p-5 justify-center">
         <Button
           onClick={handleLinkedInClick}
-          className="bg-blue-500 hover:bg-blue-700 text-white ml-2 px-4 py-2 rounded-lg transition duration-300"
+          className="bg-blue-500 hover:bg-blue-700 text-white m-5 rounded-lg transition duration-300"
         >
           LinkedIn
         </Button>
         <Button
           onClick={handleYouTubeClick}
-          className="bg-red-500 hover:bg-red-600 text-white ml-2 px-4 py-2 rounded-lg transition duration-300"
+          className="bg-red-500 hover:bg-red-600 text-white m-5 rounded-lg transition duration-300"
         >
           YouTube
         </Button>

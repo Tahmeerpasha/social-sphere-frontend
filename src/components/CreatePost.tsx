@@ -6,8 +6,9 @@ import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { AiOutlineClose } from "react-icons/ai";
 import Assistant from "./Assistant";
-import { useToast } from "@/components/ui/use-toast"
 
+import { useToast } from "@/components/ui/use-toast";
+import { BeatLoader } from "react-spinners";
 
 
 type ToggleFunction = () => void;
@@ -19,13 +20,14 @@ interface Props {
 
 const CreatePost: React.FC<Props> = ({ toggle }) => {
 
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const [textareaValue, setTextareaValue] = useState("");
   const [mediaUploaded, setMediaUploaded] = useState(false);
   const [assistantView, setAssistantView] = useState(false);
   const [visibility, setVisibility] = useState("PUBLIC");
 
+  const [submitting, setSubmitting] = useState(false);
   const handleTextareaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
@@ -36,18 +38,24 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
     return textareaValue.length === 0;
   };
 
-  
+
   const shareNow = async () => {
     try {
+      setSubmitting(true);
       if (textareaValue && !mediaUploaded) {
+        setTextareaValue("");
         await createTextShare();
       } else if (textareaValue && mediaUploaded) {
+        setTextareaValue("");
         await handleImageVideoUpload();
       } else {
         console.log("Cannot create share with empty content");
       }
     } catch (error) {
       console.error("Error creating LinkedIn post:", error);
+
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -55,11 +63,12 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
     try {
       const requestBody = {
         content: textareaValue,
-        visibility: visibility
+
+        visibility: visibility,
       };
 
       const response = await api.post(
-        'linkedIn/publish-textual-post',
+        "linkedIn/publish-textual-post",
         requestBody
       );
 
@@ -68,7 +77,8 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
         toast({
           title: "Text post created",
           // description: "Friday, February 10, 2023 at 5:57 PM",
-        })
+
+        });
       } else {
         console.error(
           "Error creating LinkedIn text share:",
@@ -85,11 +95,11 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
       if (!files[0]) {
         console.error("No files provided for upload.");
         return;
+
+      } else {
+        setMediaUploaded(true);
       }
-      else{
-        setMediaUploaded(true)
-      }
-      const file = files[0]; 
+      const file = files[0];
       const mediaType = file.type.startsWith("image") ? "image" : "video";
 
       const formData = new FormData();
@@ -103,18 +113,17 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data"
-          }
+
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
 
       if (response.status === 200) {
         console.log("Complete post published:", response.data);
       } else {
-        console.error(
-          "Error publishing complete post:",
-          response.data.error
-        );
+
+        console.error("Error publishing complete post:", response.data.error);
       }
     } catch (error) {
       console.error("Error publishing complete post:", error);
@@ -126,9 +135,17 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
-        {/* Assistant view */}
-        {assistantView && (
+
+    <div
+      className={`fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50`}
+    >
+      {submitting && (
+        <div className="absolute flex justify-center items-center z-50">
+          <BeatLoader color="white" />
+        </div>
+      )}
+      {/* Assistant view */}
+      {assistantView && (
         <div className="p-5 h-screen relative">
           <Assistant toggle={setAssistantView} setPromptText={()=>{""}} />
         </div>
@@ -161,7 +178,8 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
         <div className="flex space-x-5">
           <h3 className="bold">Visibility</h3>
           <select
-            className="outline-none  border-2 border-pink-500 rounded-lg"
+
+            className="outline-none  border rounded-lg"
             value={visibility}
             onChange={(e) => setVisibility(e.target.value)}
           >
@@ -170,9 +188,8 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
           </select>
         </div>
         <div>
-          <FileInput 
-           
-          onUpload={handleImageVideoUpload} />
+
+          <FileInput onUpload={handleImageVideoUpload} />
         </div>
         <div className="flex space-x-5 justify-end p-2">
           <Button disabled={isButtonDisabled()}>Save as draft</Button>
