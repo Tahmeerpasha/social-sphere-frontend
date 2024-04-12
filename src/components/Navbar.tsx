@@ -17,29 +17,29 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed z-50 w-full bg-stone-800 text-white dark:bg-zinc-800 shadow-md">
+    <nav className="fixed z-50 w-full bg-white dark:bg-zinc-800 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-3">
           {/* Logo */}
-          <Link href={"/"} className="flex-shrink-0 absolute left-10">
+          <div className="flex-shrink-0">
             <Image
               src="/logo/svg/logo-color.svg"
               alt="logo"
               width={50}
               height={50}
             />
-          </Link>
+          </div>
 
           {/* UL tags for larger screens */}
-          <div className="hidden md:flex md:items-center md:space-x-4 p-2">
-            <ul className="flex space-x-10 justify-between lg:text-xl ml-80">
+          <div className="hidden md:flex md:items-center md:space-x-4">
+            <ul className="flex space-x-4 lg:text-xl">
               <li>
                 <a
                   href="/publish"
                   className={
                     pathName === "/publish"
-                      ? `text-white dark:text-white`
-                      : ` dark:text-gray-300 hover:text-gray-500 dark:hover:text-white  text-slate-500 transition duration-300`
+                      ? `text-gray-900 dark:text-white`
+                      : `text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300`
                   }
                 >
                   Publishing
@@ -50,8 +50,8 @@ const Navbar = () => {
                   href="/analytics"
                   className={
                     pathName === "/analytics"
-                      ? `text-white dark:text-white`
-                      : ` dark:text-gray-300 hover:text-gray-500 dark:hover:text-white  text-slate-500 transition duration-300`
+                      ? `text-gray-900 dark:text-white`
+                      : `text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300`
                   }
                 >
                   Analytics
@@ -62,8 +62,8 @@ const Navbar = () => {
                   href="/engagement"
                   className={
                     pathName === "/engagement"
-                      ? `text-white dark:text-white`
-                      : ` dark:text-gray-300 hover:text-gray-500 dark:hover:text-white  text-slate-500 transition duration-300`
+                      ? `text-gray-900 dark:text-white`
+                      : `text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300`
                   }
                 >
                   Engagement
@@ -118,7 +118,7 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <div className="hidden md:flex items-center absolute right-10 space-x-4">
+              <div className="hidden md:flex items-center space-x-4">
                 <ModeToggle />
                 <Avatar
                   email={userEmail}

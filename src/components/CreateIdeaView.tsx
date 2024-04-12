@@ -106,7 +106,7 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
           <Assistant toggle={setAssistantView} setPromptText={setTextContent} />
         </div>
       )}
-      <div className="  bg-white dark:bg-black rounded-xl">
+      <div className="  bg-white rounded-xl">
         {/* Heading - new Idea and Tags */}
         <div className="flex justify-between items-center ">
           <div className="flex justify-between items-center px-10 py-0">
