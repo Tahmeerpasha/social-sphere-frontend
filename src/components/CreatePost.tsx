@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState } from "react";
 import api from "@/lib/api";
 import FileInput from "./FileInput";
@@ -6,8 +6,10 @@ import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { AiOutlineClose } from "react-icons/ai";
 import Assistant from "./Assistant";
+
 import { useToast } from "@/components/ui/use-toast";
 import { BeatLoader } from "react-spinners";
+
 
 type ToggleFunction = () => void;
 
@@ -15,15 +17,17 @@ interface Props {
   toggle: ToggleFunction;
 }
 
+
 const CreatePost: React.FC<Props> = ({ toggle }) => {
+
   const { toast } = useToast();
 
   const [textareaValue, setTextareaValue] = useState("");
   const [mediaUploaded, setMediaUploaded] = useState(false);
   const [assistantView, setAssistantView] = useState(false);
   const [visibility, setVisibility] = useState("PUBLIC");
-  const [submitting, setSubmitting] = useState(false);
 
+  const [submitting, setSubmitting] = useState(false);
   const handleTextareaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
@@ -33,6 +37,7 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
   const isButtonDisabled = (): boolean => {
     return textareaValue.length === 0;
   };
+
 
   const shareNow = async () => {
     try {
@@ -48,6 +53,7 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
       }
     } catch (error) {
       console.error("Error creating LinkedIn post:", error);
+
     } finally {
       setSubmitting(false);
     }
@@ -57,6 +63,7 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
     try {
       const requestBody = {
         content: textareaValue,
+
         visibility: visibility,
       };
 
@@ -70,6 +77,7 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
         toast({
           title: "Text post created",
           // description: "Friday, February 10, 2023 at 5:57 PM",
+
         });
       } else {
         console.error(
@@ -87,6 +95,7 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
       if (!files[0]) {
         console.error("No files provided for upload.");
         return;
+
       } else {
         setMediaUploaded(true);
       }
@@ -104,6 +113,7 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
         formData,
         {
           headers: {
+
             "Content-Type": "multipart/form-data",
           },
         }
@@ -112,6 +122,7 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
       if (response.status === 200) {
         console.log("Complete post published:", response.data);
       } else {
+
         console.error("Error publishing complete post:", response.data.error);
       }
     } catch (error) {
@@ -124,6 +135,7 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
   };
 
   return (
+
     <div
       className={`fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50`}
     >
@@ -135,15 +147,10 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
       {/* Assistant view */}
       {assistantView && (
         <div className="p-5 h-screen relative">
-          <Assistant
-            toggle={setAssistantView}
-            setPromptText={() => {
-              ("");
-            }}
-          />
+          <Assistant toggle={setAssistantView} setPromptText={()=>{""}} />
         </div>
       )}
-      <div className="bg-white dark:bg-black p-8 w-1/2 h-auto rounded-lg">
+      <div className="bg-white p-8 w-1/2 h-auto rounded-lg">
         <div className="flex justify-between mb-4">
           <h2 className="text-lg font-bold">Create Post</h2>
           <button className="text-3xl font-bold" onClick={toggle}>
@@ -161,7 +168,7 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
           ></Textarea>
           {!textareaValue && (
             <Button
-              onClick={() => setAssistantView(!assistantView)}
+            onClick={() => setAssistantView(!assistantView)}
               className="absolute top-1 left-36  px-3 py-1 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-lg opacity-50 hover:opacity-100"
             >
               Use the AI Assistant
@@ -171,6 +178,7 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
         <div className="flex space-x-5">
           <h3 className="bold">Visibility</h3>
           <select
+
             className="outline-none  border rounded-lg"
             value={visibility}
             onChange={(e) => setVisibility(e.target.value)}
@@ -180,6 +188,7 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
           </select>
         </div>
         <div>
+
           <FileInput onUpload={handleImageVideoUpload} />
         </div>
         <div className="flex space-x-5 justify-end p-2">

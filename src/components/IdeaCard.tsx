@@ -54,8 +54,9 @@ const IdeaCard = ({ img, text, id, triggerFetch }: IdeaCardProps) => {
           <div className="absolute top-0 right-0 mt-2 mr-2">
             <Trash
               size={30}
+              color="white"
               cursor="pointer"
-              className="hover:bg-red-500  p-2 rounded-xl"
+              className="bg-red-500 p-2 rounded-xl"
             />
           </div>
         </AlertDialogTrigger>

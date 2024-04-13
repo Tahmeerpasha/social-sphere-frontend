@@ -35,7 +35,7 @@ const Assistant = ({ toggle, setPromptText }: AssistantProps) => {
       });
   };
   return (
-    <div className="bg-white dark:bg-black w-fit h-full flex flex-col justify-start  p-10 rounded-xl">
+    <div className="bg-white w-fit h-full flex flex-col justify-start  p-10 rounded-xl">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg flex items-center font-bold">
           {" "}
