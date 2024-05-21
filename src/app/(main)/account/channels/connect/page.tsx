@@ -39,34 +39,40 @@ const Page = () => {
   };
 
   useEffect(() => {
-    const checkUser = async () => {
+    const checkAuthenticationsForLinkedInAndYoutube = async () => {
       isUserLoggedIn();
+      const urlParams = new URLSearchParams(window.location.search);
+      const authorizationCode = urlParams.get("code");
+      const returnedState = urlParams.get("state");
+
+      // Extract access token from hash fragment
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      const youtubeAccessToken = hashParams.get("access_token");
+      console.log("Youtube token:", youtubeAccessToken);
+
+      if (authorizationCode && returnedState && !codeExchanged) {
+        // Set the codeExchanged flag to true to prevent further processing
+        setCodeExchanged(true);
+        await exchangeAuthorizationCodeForToken(
+          authorizationCode,
+          returnedState
+        );
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname
+        );
+        router.push("/publish");
+      }
+
+      // Check if channel has been created already
+      if (youtubeAccessToken && !channelCreated) {
+        createChannel("YouTube", youtubeAccessToken);
+        // Set channelCreated to true to prevent multiple requests
+        setChannelCreated(true);
+      }
     };
-    checkUser();
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const authorizationCode = urlParams.get("code");
-    const returnedState = urlParams.get("state");
-
-    // Extract access token from hash fragment
-    const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    const youtubeAccessToken = hashParams.get("access_token");
-    console.log("Youtube token:", youtubeAccessToken);
-
-    if (authorizationCode && returnedState && !codeExchanged) {
-      // Set the codeExchanged flag to true to prevent further processing
-      setCodeExchanged(true);
-      exchangeAuthorizationCodeForToken(authorizationCode, returnedState);
-      window.history.replaceState({}, document.title, window.location.pathname);
-      router.push("/publish");
-    }
-
-    // Check if channel has been created already
-    if (youtubeAccessToken && !channelCreated) {
-      createChannel("YouTube", youtubeAccessToken);
-      // Set channelCreated to true to prevent multiple requests
-      setChannelCreated(true);
-    }
+    checkAuthenticationsForLinkedInAndYoutube();
   }, []);
 
   const handleYouTubeClick = () => {
